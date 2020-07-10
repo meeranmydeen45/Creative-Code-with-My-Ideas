@@ -1,0 +1,820 @@
+
+<!Doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<style>
+
+#flip-box{
+margin-left:150px;
+width:1000px;
+perspective:1000px;
+}
+#flip-inner{
+position:relative;
+width:100%;
+height:100%;
+transition:transform 3s;
+transform-style:preserve-3d;
+}
+
+#flip-front, #flip-back{
+position:absolute;
+width:100%;
+height:100%;
+backface-visibility:hidden;
+}
+#flip-back{
+
+transform:rotateY(180deg);
+}
+
+tr .ui-selected{background:black; color:white}
+
+#trHeading{
+color:yellow;
+background:dodgerblue;
+font-weight:bold;
+font-size:23px;
+text-align:center;
+}
+
+#imgCountry{
+height:30px;
+width:100px;
+margin-right:10px;
+}
+
+
+#tdCountry{
+width:300px;
+font-weight:bold;
+color:black;
+font-size:23px;
+}
+
+#tdCode{
+color:blue;
+text-align:center;
+font-weight:bold;
+font-size:23px;
+}
+
+#tdBuy{
+
+color:#008000;
+font-weight:bold;
+text-align:center;
+font-size:23px;
+}
+
+#tdSale{
+
+color:	#FF6347;
+text-align:center;
+font-weight:bold;
+font-size:23px;
+}
+
+#tdTransfer{
+
+color:Magenta;
+text-align:center;
+font-weight:bold;
+font-size:23px;
+}
+
+#dynamictd{
+width:110px;
+position:relative;
+
+}
+#txtBox{
+position:absolute;
+top:0;
+left:0;
+text-align:center;
+width:80px;
+height:20px;
+}
+#btnEdit{
+position:absolute;
+top:20px;
+left:0;
+width:80px;
+height:25px;
+}
+#btnPlus{
+position:absolute;
+top:0px;
+left:80px;
+height:20px;
+font-size:10px;
+width:30px;
+}
+#btnMinus{
+position:absolute;
+top:20px;
+left:80px;
+height:25px;
+font-size:10px;
+width:30px;
+}
+
+
+ul{
+list-style-type:none;
+margin-top:60px;
+float:left;
+width:50%;
+padding:0;
+}
+
+ul li{
+color:blue;
+background:white;
+text-align:center;
+border:1px dotted blue;
+height:100px;
+font-size:40px;
+font-weight:bold;
+}
+
+#ulRight .ui-selected {
+background:yellow;
+color:dodgerblue;
+
+}
+#ulLeft li{
+text-align:left;
+
+}
+#dynami-li{
+position:relative;
+}
+#txtBox2{
+position:absolute;
+width:100px;
+height:40px;
+left:400px;
+top:0;
+}
+#btnSave{
+position:absolute;
+width:100px;
+height:40px;
+top:0;
+left:500px;
+font-size:20px;
+}
+
+#btnFlip{
+
+}
+#btnSelectable{
+
+}
+#btnSortable{
+
+}
+#ImageTag2{
+margin-right:10px;
+width:200px;
+height:90px;
+}
+
+</style>
+
+<script>
+$(document).ready(function(){
+var obj;
+var dynamciControl = '<td id="dynamictd"><input type="text" id="txtBox"><input type="button" id="btnEdit" value="Edit"> <button type="button" id="btnPlus"><a class="fas fa-plus"></a></button> <button type="button" id="btnMinus"><a class="fas fa-minus"></a></button> </td>';
+
+var objX;
+var control = '<div id="dynami-li"><input type="text" id="txtBox2"><input type="button" id="btnSave" value="Add"></div>';
+var fValue = 0;
+
+$('#table1').find('tr:gt(0)').each(function(){
+var cookieName = $(this).find('td:eq(1)').text();
+cookieName = cookieName.trim();
+
+var buy = getCookie('buy'+cookieName) == ''?  $(this).find('td:eq(2)').text(): getCookie('buy'+cookieName) ;
+var sale = getCookie('sale'+cookieName) == ''? $(this).find('td:eq(3)').text(): getCookie('sale'+cookieName);
+var transfer = getCookie('Tf'+cookieName) == ''? $(this).find('td:eq(4)').text(): getCookie('Tf'+cookieName);
+$(this).find('td:eq(2)').text(buy);
+$(this).find('td:eq(3)').text(sale);
+$(this).find('td:eq(4)').text(transfer);
+});
+
+
+
+
+
+$('tr').selectable({
+selected:function(event, ui){
+if($(ui.selected).hasClass('selectedfilter')) {
+        $(ui.selected).removeClass('selectedfilter').removeClass('ui-selected');
+        $('#dynamictd').remove();
+    } 
+    else {
+        $('.ui-selected').removeClass('selectedfilter').removeClass('ui-selected');
+         $('#dynamictd').remove();
+          $(ui.selected).addClass('selectedfilter').addClass('ui-selected');
+         var objD = $('.ui-selected');
+
+
+         var tests = parseFloat(objD.text());
+         var len  = objD.text().toString().trim().length;
+        
+         if(!isNaN(tests) || len == 0)
+         {
+       
+        obj = $('.ui-selected');
+        
+        if( $('.ui-selected').next().length > 0)
+        {
+        $('.ui-selected').siblings().last().after(dynamciControl);
+        }
+        else{
+         $('.ui-selected').after(dynamciControl);
+        
+        }
+        $('#txtBox').val(parseFloat(obj.text()));
+        }
+        else{
+        $('.ui-selected').removeClass('selectedfilter').removeClass('ui-selected');
+        alert("String not allowed");
+        }
+        
+    }
+    }});
+    
+    
+$('#btnCookie').click(function(){
+
+$('#table1').find('tr:gt(0)').each(function(){
+
+var d = new Date();
+d.setTime(d.getTime() + (30*24*60*60*1000));
+var expiryTime = d.toUTCString();
+
+var cookieName = $(this).find('td:eq(1)').text();
+cookieName = cookieName.trim();
+var buy = $(this).find('td:eq(2)').text();
+var sale = $(this).find('td:eq(3)').text();
+var transfer = $(this).find('td:eq(4)').text();
+
+document.cookie = 'buy'+cookieName+'='+buy+';expires='+expiryTime+';';
+document.cookie = 'sale'+cookieName+'='+sale+';expires='+expiryTime+';';
+document.cookie = 'Tf'+cookieName+'='+transfer+';expires='+expiryTime+';';
+
+});
+
+alert('Value Stored in Browser-Cookie')
+});
+
+
+$('#table1').on('click', '#btnEdit', function(){
+var x = $('#txtBox').val();
+var tests = parseFloat($('#txtBox').val());
+if(!isNaN(tests))
+{
+obj.text(x);
+$('#txtBox').val('');
+$('#dynamictd').remove();
+$('.ui-selected').removeClass('selectedfilter').removeClass('ui-selected');
+}
+else{
+alert('Please Enter Valid Data');
+}
+
+
+
+});
+ 
+$('#table1').on('click', '#btnPlus', function(){
+var tests = parseFloat(obj.text());
+if(!isNaN(tests)){
+if(tests < 0.1){
+value = tests;
+value += 0.001;
+value = value.toFixed(5);
+}
+else{
+value = tests;
+value += 0.01;
+value = value.toFixed(2);
+}
+
+obj.text(value);
+$('#txtBox').val(value);
+}
+});
+
+$('#table1').on('click', '#btnMinus', function(){
+
+var tests = parseFloat(obj.text());
+if(!isNaN(tests)){
+if(tests < 0.1){
+value = tests;
+value -= 0.001;
+value = value.toFixed(5);
+}
+else{
+value = tests;
+value -= 0.01;
+value = value.toFixed(2);
+}
+
+obj.text(value);
+$('#txtBox').val(value);
+}
+});
+ 
+
+
+$('#ulRight').selectable({
+selected:function(event, ui){
+
+if($(ui.selected).hasClass('selectedfilter'))
+{
+  $(ui.selected).removeClass('selectedfilter').removeClass('ui-selected');
+$('#dynami-li').remove();
+}
+else{
+$('#dynami-li').remove();
+$(ui.selected).addClass('selectedfilter').addClass('ui-selected');
+objX = $(ui.selected);
+$(ui.selected).append(control);
+
+}
+
+}
+
+});
+
+
+$('#ulLeft').sortable({
+cursor:'pointer'
+
+});
+
+$('#ulRight li').on("click", '#btnSave', function(){
+var value = $('#txtBox2').val();
+objX.text(value);
+objX.removeClass('selectedfilter').removeClass('ui-selected');
+});
+
+
+$('#btnSortable').click(function(){
+var btnValue = $('#btnSortable').attr('value');
+if(btnValue == 'Drag-Sort')
+{
+$('tr').selectable('destroy');
+$('tbody').sortable();
+$('#btnSortable').attr('value', 'Back');
+}
+else{
+$('tr').selectable({
+selected:function(event, ui){
+if($(ui.selected).hasClass('selectedfilter')) {
+        $(ui.selected).removeClass('selectedfilter').removeClass('ui-selected');
+        $('#dynamictd').remove();
+    } 
+    else {
+        $('.ui-selected').removeClass('selectedfilter').removeClass('ui-selected');
+         $('#dynamictd').remove();
+          $(ui.selected).addClass('selectedfilter').addClass('ui-selected');
+         var objD = $('.ui-selected');
+
+
+         var tests = parseFloat(objD.text());
+         var len  = objD.text().toString().trim().length;
+        
+         if(!isNaN(tests) || len == 0)
+         {
+       
+        obj = $('.ui-selected');
+        
+        if( $('.ui-selected').next().length > 0)
+        {
+        $('.ui-selected').siblings().last().after(dynamciControl);
+        }
+        else{
+         $('.ui-selected').after(dynamciControl);
+        
+        }
+        $('#txtBox').val(parseFloat(obj.text()));
+        }
+        else{
+        $('.ui-selected').removeClass('selectedfilter').removeClass('ui-selected');
+        alert("String not allowed");
+        }
+        
+    }
+    }});
+    
+$('#btnSortable').attr('value', 'Drag-Sort');
+}
+
+});
+
+$('#btnFlip').click(function(){
+
+if(fValue % 2 == 0)
+{
+
+$('#flip-inner').css('transform', 'rotateY(180deg)');
+fValue += 1;
+}
+else{
+$('#flip-inner').css('transform', 'rotateY(0deg)');
+fValue += 1;
+}
+
+});
+
+    
+
+
+});
+
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
+}
+
+</script>
+</head>
+<body>
+<div id="flip-box">
+<div id="flip-inner">
+<div id="flip-front">
+<table id="table1" border="1" class="table table-striped">
+<tbody>
+<tr id="trHeading">
+<td id="tdCountryHeading">
+COUNTRY
+</td>
+<td id="tdCodeHeading">
+CODE
+</td>
+<td id="tdBuyHeading">
+FC BUY
+</td>
+<td id="tdSaleHeading">
+FC SALE
+</td>
+<td id="tdTransferHeading">
+TT Rate
+</td>
+</tr>
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\USA.png" id="imgCountry" height="20" width="50">USA
+</td>
+<td id="tdCode">
+USD
+</td>
+<td id="tdBuy">
+3.67
+</td>
+<td id="tdSale">
+3.68
+</td>
+<td id="tdTransfer">
+
+</td>
+</tr>
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\AUSTRALIA.png" id="imgCountry" >AUSTRALIA
+</td>
+<td id="tdCode">
+AUD
+</td>
+<td id="tdBuy">
+2.46
+</td>
+<td id="tdSale">
+2.54
+</td>
+<td id="tdTransfer">
+</td>
+</tr>
+
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\GB.png" id="imgCountry" >BRITAN
+</td>
+<td id="tdCode">
+GBP
+</td>
+<td id="tdBuy">
+4.67
+</td>
+<td id="tdSale">
+4.74
+</td>
+<td id="tdTransfer">
+</td>
+</tr>
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\BAHRAIN.jpg" id="imgCountry">BAHRAIN
+</td>
+<td id="tdCode">
+BHD
+</td>
+<td id="tdBuy">
+9.63
+</td>
+<td id="tdSale">
+9.700
+</td>
+<td id="tdTransfer">
+</td>
+</tr>
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\BDT.png" id="imgCountry">BANGLADESH
+</td>
+<td id="tdCode">
+BDT
+</td>
+<td id="tdBuy">
+0.0425
+</td>
+<td id="tdSale">
+0.045
+</td>
+<td id="tdTransfer">
+23.44
+</td>
+</tr>
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\CANADA.jpg" id="imgCountry" >CANADA
+</td>
+<td id="tdCode">
+CAD
+</td>
+<td id="tdBuy">
+2.720
+</td>
+<td id="tdSale">
+2.810
+</td>
+<td id="tdTransfer">
+</td>
+</tr>
+
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\EURO.png" id="imgCountry">EURO
+</td>
+<td id="tdCode">
+EURO
+</td >
+<td id="tdBuy">
+3.990
+</td>
+<td id="tdSale">
+4.060
+</td>
+<td id="tdTransfer">
+
+</td>
+</tr>
+
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\EGYP.jpg" id="imgCountry" >EGYPT
+</td>
+<td id="tdCode">
+EGP
+</td>
+<td id="tdBuy">
+0.17
+</td>
+<td id="tdSale">
+0.24
+</td>
+<td id="tdTransfer">
+</td>
+</tr>
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\INDIA.png" id="imgCountry" >INDIA
+</td>
+<td id="tdCode">
+INR
+</td>
+<td id="tdBuy">
+0.050
+</td>
+<td id="tdSale">
+0.0535
+</td>
+<td id="tdTransfer">
+19.51
+</td>
+</tr>
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\KUWAIT.png" id="imgCountry" >KUWAIT
+</td>
+<td id="tdCode">
+KWD
+</td>
+<td id="tdBuy">
+12.04
+</td>
+<td id="tdSale">
+12.120
+</td>
+<td id="tdTransfer">
+</td>
+</tr>
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\NEPAL.jpg" id="imgCountry">NEPAL
+</td>
+<td id="tdCode">
+NPR
+</td>
+<td id="tdBuy">
+0.029
+</td>
+<td id="tdSale">
+0.034
+</td>
+<td id="tdTransfer">
+</td>
+</tr>
+
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\OMAN.png" id="imgCountry">OMAN
+</td>
+<td id="tdCode">
+OMR
+</td>
+<td id="tdBuy">
+9.510
+</td>
+<td id="tdSale">
+9.535
+</td>
+<td id="tdTransfer">
+</td>
+</tr>
+
+
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\PHP.png" id="imgCountry" >PHILIPPINES
+</td>
+<td id="tdCode">
+PHP
+</td>
+<td id="tdBuy">
+0.069
+</td>
+<td id="tdSale">
+0.074
+</td>
+<td id="tdTransfer">
+13.83
+</td>
+</tr>
+
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\PAK.png" id="imgCountry">PAKISTAN
+</td>
+<td id="tdCode">
+PKR
+</td>
+<td id="tdBuy">
+0.022
+</td>
+<td id="tdSale">
+0.0260
+</td>
+<td id="tdTransfer">
+42.32
+</td>
+</tr>
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\SWISS.png" id="imgCountry">SWISS
+</td>
+<td id="tdCode">
+CHF
+</td>
+<td id="tdBuy">
+3.65
+</td>
+<td id="tdSale">
+3.750
+</td>
+<td id="tdTransfer">
+</td>
+</tr>
+
+
+
+
+
+<tr>
+<td id="tdCountry">
+<img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\SAUDI.png" id="imgCountry">SAUDIA
+</td>
+<td id="tdCode">
+SAR
+</td>
+<td id="tdBuy">
+0.970
+</td>
+<td id="tdSale">
+0.980
+</td>
+<td id="tdTransfer">
+</td>
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+</div>
+
+<div id="flip-back">
+<ul id="ulLeft">
+<li><img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\BDT.png" alt="Imag" id="ImageTag2">BDT</li>
+<li><img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\INDIA.png" alt="Imag" id="ImageTag2">INR</li>
+<li><img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\PHP.png" alt="Imag" id="ImageTag2">PHP-BANK</li>
+<li><img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\PHP.png" alt="Imag" id="ImageTag2">PHP-CASH</li>
+<li><img src="\\192.168.7.112\AbuDhabi Share_New\Meeran.mydeen\National Flags\PAK.png" alt="Imag" id="ImageTag2">PKR</li>
+</ul>
+
+<ul id="ulRight">
+<li>19.52</li>
+<li>23.43</li>
+<li>13.83</li>
+<li>13.71</li>
+<li>42.34</li>
+</ul>
+</div>
+
+</div>
+</div>
+
+<div class="btn-group-vertical">
+
+<input type="button" id="btnCookie" value="SetCookie" class="btn btn-outline-primary">
+
+<input type="button" id="btnFlip" value="FlipView" class="btn btn-outline-primary">
+
+<input type="button" id="btnSortable" value="Drag-Sort" class="btn btn-outline-primary">
+</div>
+</body>
+
+</html>
