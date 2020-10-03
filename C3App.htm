@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <style>
+#divBox{
+margin-left:0px;
+margin-top:25px;
+}
+#divEmployee{
+width:300px;
+position:absolute;
+top:230px;
+left:600px;
+
+
+}
+
+</style>
+<script>
+$(document).ready(function(){
+
+var txtEmployee = $('#txtEmployee');
+var countEmp = 0;
+
+
+
+$('#btnAdd').click(function(){
+countEmp += 1;
+var txtValue = txtEmployee.val();
+txtEmployee.val('');
+
+
+
+
+var toastDiv = '<div class="toast" id="toastNo'+countEmp+'" data-autohide="false" style="margin:0px; background:yellow"><div class="toast-header"><strong class="mr-auto text-primary">'+txtValue+'</strong><button type="button" id="'+countEmp+'" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button></div></div>';
+
+$('#divEmployee').append(toastDiv);
+
+$('.toast').toast('show');
+
+$('.toast').on('click','button', function(){
+
+     var x =   $(this).attr('id');
+     $('#toastNo'+x).remove();
+});
+
+
+});
+
+$('#btnStore').click(function(){
+$('.toast').each(function(){
+var text = $(this).text();
+alert(text);
+
+$('#txtCompany').val('');
+$('#txtCode').val('');
+$('#divEmployee').text('');
+
+alert('Stored/EmailSend');
+});
+
+
+});
+
+
+
+});
+
+</script>
+
+</head>
+<body>
+
+<div class="container mt-3">
+  <h2>C3 APP</h2>
+  <br>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#home">Register C3</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu1">Pending C3</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu2">Available C3</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu3">Reports</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="container tab-pane active"><br>
+      <h3>SendEmail</h3>
+      <div id="divBox">
+Company Name:
+<input type="text" class="form-control" style="width:300px" id="txtCompany">
+Company Code:
+<input type="text" class="form-control" style="width:300px" id="txtCode">
+Mobile Number:
+<input type="text" class="form-control" style="width:300px" id="txtMobile">
+Employee Name:
+<input type="text" class="form-control" style="width:300px" id="txtEmployee">
+<input type="button" class="btn btn-outline-primary mt-3" value="Add" id="btnAdd">
+<input type="button" class="btn btn-outline-info mt-3" value="Store" id="btnStore">
+</div>
+<div id="divEmployee">
+</div>
+</div>
+
+    <div id="menu1" class="container tab-pane fade"><br>
+      <h3>Update Rcvd Card</h3>
+      
+    </div>
+    
+    <div id="menu2" class="container tab-pane fade"><br>
+      <h3>Update Delivered Cards</h3>
+      
+    </div>
+    
+     <div id="menu3" class="container tab-pane fade"><br>
+      <h3>Card Summary</h3>
+      
+    </div>
+    
+  </div>
+</div>
+
+</body>
+</html>
