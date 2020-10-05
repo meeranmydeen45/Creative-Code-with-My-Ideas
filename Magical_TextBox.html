@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+height:60vh;
+background-color:lightbue;
+display:flex;
+flex-direction:column;
+justify-content:space-around;
+align-items:center;
+font-family:sans-serif;
+}
+
+.form{
+
+width:50%;
+position:relative;
+height:50px;
+overflow:hidden;
+}
+
+.form input{
+
+width:100%;
+height:100%;
+padding-top:20px;
+border:none;
+outline:none;
+}
+
+.form label{
+position:absolute;
+bottom:0px;
+left:0px;
+width:100%;
+height:100%;
+pointer-events:none;
+border-bottom:1px solid black;
+
+}
+
+.form label::after{
+content:"";
+position:absolute;
+height:100%;
+width:100%;
+left:0;
+bottom:-2px;
+border-bottom: 3px solid #5fa8d3;
+transform: translateX(-100%);
+transition: transform 1s ease;
+}
+
+.content-name{
+position:absolute;
+bottom:5px;
+left:0;
+transition:bottom 1s ease-out;
+
+}
+
+.form input:focus + .label-name .content-name{
+color:#5fa8d3;
+font-size:14px;
+bottom:25px;
+}
+
+.form input:focus + .label-name::after{
+transform: translateX(0%);
+}
+
+ 
+</style>
+</head>
+<body>
+
+<h4>Magical TextBox..</h4>
+
+<div class="form">
+<input type="text" name="texBox" autocomplete="off" required/>
+<label for="texBox" class="label-name">
+<span class="content-name">Name</span>
+</label>
+</div>
+
+<div>
+Zia Ibrah
+</div>
+</body>
+</html>
