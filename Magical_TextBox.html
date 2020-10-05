@@ -66,13 +66,15 @@ transition:bottom 1s ease-out;
 
 }
 
-.form input:focus + .label-name .content-name{
+.form input:focus + .label-name .content-name, 
+.form input:valid + .label-name .content-name{
 color:#5fa8d3;
 font-size:14px;
 bottom:25px;
 }
 
-.form input:focus + .label-name::after{
+.form input:focus + .label-name::after,
+.form input:valid + .label-name::after{
 transform: translateX(0%);
 }
 
@@ -90,8 +92,20 @@ transform: translateX(0%);
 </label>
 </div>
 
-<div>
-Zia Ibrah
+<div class="form">
+<input type="text" name="texBox" autocomplete="off" required/>
+<label for="texBox" class="label-name">
+<span class="content-name">Address</span>
+</label>
 </div>
+
+<div class="form">
+<input type="text" name="texBox" autocomplete="off" required/>
+<label for="texBox" class="label-name">
+<span class="content-name">Place</span>
+</label>
+</div>
+
+
 </body>
 </html>
