@@ -1,0 +1,44 @@
+import React from 'react'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
+import $ from 'jquery'
+
+export default function generatePDF(){
+
+    
+
+    const handleClick = () => {
+        alert('Button') 
+    
+        var printArea = document.getElementById('container')
+        
+        html2canvas(printArea).then(canvas => {
+            var img = canvas.toDataURL()
+            var doc = new jsPDF()
+            doc.addImage(img, 'jpg', 10, 10)
+            doc.text(10,50,"Hello World")
+            doc.save('Save.pdf')
+        
+        })
+
+
+
+        
+
+    }
+
+   
+return(
+<div>
+    <input type="button" value="PDF" onClick={handleClick}/>
+    <div id="container">
+    <div id="div1">
+        I am from the pDF file.!!
+    </div>
+    </div>
+</div>
+
+)
+
+
+}
