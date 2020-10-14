@@ -41,11 +41,9 @@ export default function generatePDF(){
 
 
         })
-
-
-
         
-
+        
+   
     }
 
    
@@ -63,3 +61,165 @@ return(
 
 
 }
+
+------------------------------------------------------------------------------------------------------
+Stack Developer Samples::
+
+var doc = new jsPDF();
+$('#generatereport').click(function()
+{
+    doc.fromHTML(
+        $('#lppresults'), 15, 15,
+        {width: 170},
+        function()
+        {
+            var blob = doc.output('blob');
+
+            var formData = new FormData();
+            formData.append('pdf', blob);
+
+            $.ajax('/upload.php',
+            {
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data){console.log(data)},
+                error: function(data){console.log(data)}
+            });
+        }
+    );
+
+
+---------------------------------------------------------------
+Blob needs array Buffer
+------------------------
+Here is my function to read PDF file from base64
+
+function base64ToArrayBuffer(base64) {
+    var binaryString = window.atob(base64);
+    var binaryLen = binaryString.length;
+    var bytes = new Uint8Array(binaryLen);
+    for (var i = 0; i < binaryLen; i++) {
+       var ascii = binaryString.charCodeAt(i);
+       bytes[i] = ascii;
+    }
+    return bytes;
+ }
+Here is my function to save a pdf file:
+
+function saveByteArray(reportName, byte) {
+    var blob = new Blob([byte], {type: "application/pdf"});
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    var fileName = reportName;
+    link.download = fileName;
+    link.click();
+};
+Here is how to use these two functions together:
+
+var sampleArr = base64ToArrayBuffer(data);
+saveByteArray("Sample Report", sampleArr);
+
+---------------------------------------------------
+
+html2canvas(document.getElementById("workAreaModel"), {
+    onrendered: function(canvas)
+    {
+        var img = canvas.toDataURL("image/png");
+        var doc = new jsPDF("l", "pt", "letter");
+        doc.addImage(img, 'JPEG',20,20);
+        var fileEncode = btoa(doc.output());
+         $.ajax({
+              url: '/model/send',
+              data: fileEncode,
+              dataType: 'text',
+              processData: false,
+              contentType: false,
+              type: 'GET',
+              success: function (response) {
+                   alter('Exit to send request');
+              },
+              error: function (jqXHR) {
+                  alter('Failure to send request');
+              }
+             });
+-------------------------------------------------------------
+Seems Like better one!!!!!!
+
+var pdf = new jsPDF('p', 'pt', 'a4');
+
+ pdf.html(document.getElementById('doc'), {
+    callback: function (pdf) {
+
+    // example text
+    pdf.text(20, 20, 'Hello world!');
+    pdf.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+
+    var base = pdf.output('datauri'); // directly to base664
+
+    console.log("base64 is  ");
+    console.log(base);
+
+    // you can generate in another format also  like blob
+     var out = pdf.output('blob');
+    var reader = new FileReader();
+
+    reader.readAsDataURL(out); 
+    reader.onloadend = function() { // for blob to base64
+         base64data = reader.result; 
+         console.log("base64 data is ");               
+         console.log(base64data );
+    }
+    pdf.save('DOC.pdf');
+
+    }
+    })
+----------------------------------------------
+datauri to Blob
+
+dataURItoBlob(dataURI) {
+      const byteString = window.atob(dataURI);
+      const arrayBuffer = new ArrayBuffer(byteString.length);
+      const int8Array = new Uint8Array(arrayBuffer);
+      for (let i = 0; i < byteString.length; i++) {
+        int8Array[i] = byteString.charCodeAt(i);
+      }
+      const blob = new Blob([int8Array], { type: 'application/pdf'});
+      return blob;
+    }
+
+// data should be your response data in base64 format
+
+const blob = this.dataURItoBlob(data);
+const url = URL.createObjectURL(blob);
+
+// to open the PDF in a new window
+window.open(url, '_blank');
+----------------------------------------------
+B64 to Blob
+
+function b64toBlob(b64Data, contentType) {
+    contentType = contentType || '';
+    var sliceSize = 512;
+    b64Data = b64Data.replace(/^[^,]+,/, '');
+    b64Data = b64Data.replace(/\s/g, '');
+    var byteCharacters = window.atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, {type: contentType});
+    return blob;
+        
