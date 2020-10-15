@@ -63,6 +63,69 @@ return(
 }
 
 ------------------------------------------------------------------------------------------------------
+Test 100% working Example: Open PDF file in new Windo
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+</style>
+</head>
+<body>
+<input type="button" value="Test" onclick="handleClick()">
+<input type="file" onchange="handleFile()" id="file1">
+<input type="button" value="PDF" onclick="generatePDF()">
+
+<script type="text/javascript">
+
+function handleClick(){
+  
+
+}
+var base64 =''
+var binary ='' 
+function handleFile(){
+var file = document.getElementById('file1').files[0]
+var reader = new FileReader()
+reader.onload = function(){
+  base64 = reader.result;
+ base64 = base64.replace(/^[^,]+,/, '');
+  base64= base64.replace(/\s/g, '');
+  var byteCharacters = window.atob(base64);
+  var byteNumbers = new Array(byteCharacters.length)
+ for (var i = 0; i < byteCharacters.length; i++) {
+  byteNumbers[i] = byteCharacters.charCodeAt(i);
+}
+ 
+var byteArray = new Uint8Array(byteNumbers);
+var blobfile = new Blob([byteArray], { type: 'application/pdf;base64' });
+console.log(blobfile)
+var fileURL = URL.createObjectURL(blobfile);
+window.open(fileURL)
+
+
+};
+if(file){
+  reader.readAsDataURL(file);
+} 
+}
+
+function generatePDF(){
+ 
+ 
+ 
+
+}
+
+
+</script>
+</body>
+</html>
+---------------------------------------------------------------------------------------------------------------------------------
+
+
+
 Stack Developer Samples::
 
 var doc = new jsPDF();
@@ -281,3 +344,4 @@ function base64ToArrayBuffer(data) {
     return bytes;
 };
         
+---------------------------------------------------------------------------------------------------
