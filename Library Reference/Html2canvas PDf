@@ -222,4 +222,62 @@ function b64toBlob(b64Data, contentType) {
 
     var blob = new Blob(byteArrays, {type: contentType});
     return blob;
+    
+    -----------------------------------------------------------------------------------
+    PDF TO BASE64
+
+<input id="inputFile" type="file" onchange="convertToBase64();" />
+
+<script type="text/javascript">
+    function convertToBase64() {
+        //Read File
+        var selectedFile = document.getElementById("inputFile").files;
+        //Check File is not Empty
+        if (selectedFile.length > 0) {
+            // Select the very first file from list
+            var fileToLoad = selectedFile[0];
+            // FileReader function for read the file.
+            var fileReader = new FileReader();
+            var base64;
+            // Onload of file read the file content
+            fileReader.onload = function(fileLoadedEvent) {
+                base64 = fileLoadedEvent.target.result;
+                // Print data in console
+                console.log(base64);
+            };
+            // Convert data to base64
+            fileReader.readAsDataURL(fileToLoad);
+        }
+    }
+</script>
+--------------------------------------------------------
+base64 to PDF
+
+function base64toPDF(data) {
+    var bufferArray = base64ToArrayBuffer(data);
+    var blobStore = new Blob([bufferArray], { type: "application/pdf" });
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(blobStore);
+        return;
+    }
+    var data = window.URL.createObjectURL(blobStore);
+    var link = document.createElement('a');
+    document.body.appendChild(link);
+    link.href = data;
+    link.download = "file.pdf";
+    link.click();
+    window.URL.revokeObjectURL(data);
+    link.remove();
+}
+
+function base64ToArrayBuffer(data) {
+    var bString = window.atob(data);
+    var bLength = bString.length;
+    var bytes = new Uint8Array(bLength);
+    for (var i = 0; i < bLength; i++) {
+        var ascii = bString.charCodeAt(i);
+        bytes[i] = ascii;
+    }
+    return bytes;
+};
         
