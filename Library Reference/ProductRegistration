@@ -45,17 +45,55 @@
   input[type="button"]{
   margin-left:5px;
   }
+  input[type="file"]{
+  margin-left:110px;
+  margin-bottom:20px;
+  }
+  #div4Input{
+   margin-bottom:20px;
+  }
+   
+  #btnStore{
+    margin-top:30px;
+    margin-left:110px;
+    min-width:300px;
+    padding:3px 0;
+    font-weight:bold;
+  }
+  #btnStore:hover{
+  color:blue;
+  }
   
-  @media screen and (max-width:480px){
+  @media screen and (max-width:850px){
+  #divBody{
+   display:flex;
+   flex-direction:column;
+  }
+  
     #divInput {
          display:flex;
          flex-direction:column;
-         
-    }
+   }
+   #div4Input{
+   display:flex;
+    flex-direction:column;
+   }
     input[type="button"]{
     margin-left:0px;
+    width:50px;
+  }
+  input[type="text"]{
+  width:100px;
+  display:block;
   }
   
+  input[type="file"]{
+  margin-left:0px;
+  margin-top:20px;
+  }
+ #btnStore{
+ margin-left:0px;
+ }
   }
   </style>
 </head>
@@ -67,7 +105,7 @@
 Product Registeration..
 </div>
 
-<div class="d-flex">
+<div class="d-flex" id="divBody">
 
 <div id="leftSection">
 
@@ -82,7 +120,35 @@ Product Registeration..
 <input type="text">
 <input type="button" value="--" class="">
 </div>
+
+<div class="d-flex" id="div4Input">
+<label>Size</label>
+<input type="text">
+<input type="button" value="--" class="">
+<label>Cost(unit)</label>
+<input type="text">
 </div>
+
+<div class="d-flex" id="div4Input">
+<div >
+<label>TotalCount</label>
+<input type="text">
+</div>
+</div>
+<label>TotalPrice</label>
+<label>$45,000.00</label>
+</div>
+</div>
+
+<div>
+<input type="file">
+</div>
+
+<div>
+<input type="button" value="store" id="btnStore">
+</div>
+</div>
+
 
 
 <div id="rightSection">
