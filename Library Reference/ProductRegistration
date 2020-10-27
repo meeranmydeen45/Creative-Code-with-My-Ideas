@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style>
+  #container{
+  padding:0;
+  border:1px solid #f1f1f1;
+  background-color:rgba(85,85,220,0.3);
+  height:100vh;
+  }
+  #txtHeading{
+  line-height:50px;
+  text-align:center;
+  background-color:lightgreen;
+  
+  }
+  
+  #leftSection{
+  border:1px solid blue;
+  margin-top:20px;
+  flex:50%;
+  }
+  #rightSection{
+  margin-top:20px;
+  flex:50%;
+  }
+  
+  #divInput{
+  margin-bottom:20px;
+  }
+  label{
+  min-width:100px;
+  margin-left:10px;
+  }
+  input[type="text"]{
+   min-width:300px;
+  }
+  input[type="button"]{
+  margin-left:5px;
+  }
+  
+  @media screen and (max-width:480px){
+    #divInput {
+         display:flex;
+         flex-direction:column;
+         
+    }
+    input[type="button"]{
+    margin-left:0px;
+  }
+  
+  }
+  </style>
+</head>
+<body> 
+
+<div class="container-fluid" id="container">
+
+<div id="txtHeading">
+Product Registeration..
+</div>
+
+<div class="d-flex">
+
+<div id="leftSection">
+
+<div class="d-flex" id="divInput">
+<label>Category</label>
+<input type="text">
+<input type="button" value="--" class="">
+</div>
+
+<div class="d-flex" id="divInput">
+<label>ProductName</label>
+<input type="text">
+<input type="button" value="--" class="">
+</div>
+</div>
+
+
+<div id="rightSection">
+Right Section
+</div>
+</div>
+
+
+
+
+</div>
+
+</body>
+</html>
