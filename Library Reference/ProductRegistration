@@ -1,165 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <style>
-  #container{
-  padding:0;
-  border:1px solid #f1f1f1;
-  background-color:rgba(85,85,220,0.3);
-  height:100vh;
-  }
-  #txtHeading{
-  line-height:50px;
-  text-align:center;
-  background-color:lightgreen;
-  
-  }
-  
-  #leftSection{
-  border:1px solid blue;
-  margin-top:20px;
-  flex:50%;
-  }
-  #rightSection{
-  margin-top:20px;
-  flex:50%;
-  }
-  
-  #divInput{
-  margin-bottom:20px;
-  }
-  label{
-  min-width:100px;
-  margin-left:10px;
-  }
-  input[type="text"]{
-   min-width:300px;
-  }
-  input[type="button"]{
-  margin-left:5px;
-  }
-  input[type="file"]{
-  margin-left:110px;
-  margin-bottom:20px;
-  }
-  #div4Input{
-   margin-bottom:20px;
-  }
-   
-  #btnStore{
-    margin-top:30px;
-    margin-left:110px;
-    min-width:300px;
-    padding:3px 0;
-    font-weight:bold;
-  }
-  #btnStore:hover{
-  color:blue;
-  }
-  
-  @media screen and (max-width:850px){
-  #divBody{
-   display:flex;
-   flex-direction:column;
-  }
-  
-    #divInput {
-         display:flex;
-         flex-direction:column;
-   }
-   #div4Input{
-   display:flex;
-    flex-direction:column;
-   }
-    input[type="button"]{
-    margin-left:0px;
-    width:50px;
-  }
-  input[type="text"]{
-  width:100px;
-  display:block;
-  }
-  
-  input[type="file"]{
-  margin-left:0px;
-  margin-top:20px;
-  }
- #btnStore{
- margin-left:0px;
- }
-  }
-  </style>
+<style>
+*{
+box-sizing:border-box;
+}
+.container-fluid{
+border:1px solid #f1f1f1;
+padding:0;
+background-color:lightgreen
+}
+#divHead{
+line-height:50px;
+text-align:center;
+}
+#divBody{
+display:flex;
+background-color:lightyellow;
+}
+#left-Section{
+flex:50%;
+margin-top:50px;
+flex-direction:column;
+
+}
+#right-Section{
+flex:50%;
+background-color:lightblue;
+}
+
+#div4{
+display:flex;
+margin-bottom:25px;
+}
+
+#div4-1{
+flex:30%;
+}
+
+#div4-2{
+flex:30%;
+overflow:hidden;
+}
+
+#div4-3{
+flex:15%;
+text-align:center;
+}
+
+#div4-4{
+flex:25%;
+text-align:center;
+}
+
+input[type="text"]{
+box-sizing:border-box;
+width:100%;
+}
+input[type="file"]{
+width:100%;
+}
+
+@media screen and (max-width:855px){
+#divBody{
+display:flex;
+flex-direction:column;
+}
+}
+
+
+@media screen and (max-width:400px){
+#divBody{
+display:flex;
+flex-direction:column;
+}
+#div4{
+display:flex;
+flex-direction:column;
+}
+
+#div4 #div4-3{
+text-align:left;
+}
+#div4 #div4-4{
+text-align:left;
+}
+
+
+}
+</style>
 </head>
-<body> 
-
-<div class="container-fluid" id="container">
-
-<div id="txtHeading">
-Product Registeration..
+<body>
+<div class="container-fluid">
+<div id="divHead">
+Product Entry
 </div>
 
-<div class="d-flex" id="divBody">
+<div id="divBody">
 
-<div id="leftSection">
-
-<div class="d-flex" id="divInput">
-<label>Category</label>
-<input type="text">
-<input type="button" value="--" class="">
-</div>
-
-<div class="d-flex" id="divInput">
-<label>ProductName</label>
-<input type="text">
-<input type="button" value="--" class="">
+<div id="left-Section">
+<div id="div4">
+<div id="div4-1"><label>ProductName</label></div>
+<div id="div4-2"><input type="text"></div>
+<div id="div4-3" style="text-align:left;"><input type="button" value="--"></div>
+<div id="div4-4"></div>
 </div>
 
-<div class="d-flex" id="div4Input">
-<label>Size</label>
-<input type="text">
-<input type="button" value="--" class="">
-<label>Cost(unit)</label>
-<input type="text">
+<div id="div4">
+<div id="div4-1"><label>Name</label></div>
+<div id="div4-2"><input type="text"></div>
+<div id="div4-3"><label>UnitPrice</label></div>
+<div id="div4-4"><input type="text"></div>
 </div>
 
-<div class="d-flex" id="div4Input">
-<div >
-<label>TotalCount</label>
-<input type="text">
+<div id="div4">
+<div id="div4-1"><label>TotalNubers</label></div>
+<div id="div4-2"><input type="text"></div>
+<div id="div4-3"><label>TotalCost</label></div>
+<div id="div4-4"><label>$45,000</label></div>
 </div>
-</div>
-<label>TotalPrice</label>
-<label>$45,000.00</label>
-</div>
+
+<div id="div4">
+<div id="div4-1"><label>FileUpload</label></div>
+<div id="div4-2"><input type="file"></div>
+<div id="div4-3"></div>
+<div id="div4-4"></div>
 </div>
 
 <div>
-<input type="file">
+<input type="button" value="Store">
 </div>
-
-<div>
-<input type="button" value="store" id="btnStore">
-</div>
-</div>
-
-
-
-<div id="rightSection">
-Right Section
-</div>
-</div>
-
-
-
 
 </div>
 
+<div id="right-Section">
+Right Section!!!
+</div>
+
+</div> 
+
+</div>
 </body>
 </html>
