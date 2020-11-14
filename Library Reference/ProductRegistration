@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <style>
 *{
@@ -12,7 +13,7 @@ box-sizing:border-box;
 .container-fluid{
 border:1px solid #f1f1f1;
 padding:0;
-background-color:lightgreen
+background-color:lightblue;
 }
 #divHead{
 line-height:50px;
@@ -20,16 +21,16 @@ text-align:center;
 }
 #divBody{
 display:flex;
-background-color:lightyellow;
+background-image:linear-gradient(to top, pink, lightblue);
 }
 #left-Section{
-flex:50%;
+flex:60%;
 margin-top:50px;
 flex-direction:column;
 
 }
 #right-Section{
-flex:50%;
+flex:40%;
 background-color:lightblue;
 }
 
@@ -39,30 +40,53 @@ margin-bottom:25px;
 }
 
 #div4-1{
-flex:30%;
+flex:20%;
 }
 
 #div4-2{
 flex:30%;
-overflow:hidden;
+
 }
 
 #div4-3{
-flex:15%;
+flex:20%;
 text-align:center;
 }
 
 #div4-4{
-flex:25%;
+flex:30%;
 text-align:center;
 }
 
 input[type="text"]{
 box-sizing:border-box;
+border:none;
+outline:none;
+border-radius:15%;
+background-color:lightyellow;
+box-shadow:0px 8px 16px 2px royalblue;
+color:royalblue;
 width:100%;
+padding:5px;
+font-weight:bold;
+z-index:-1;
 }
 input[type="file"]{
 width:100%;
+}
+label{
+margin-left:5px;
+}
+
+table{
+margin-top:50px;
+width:100%;
+border-collapse:collapse;
+}
+
+.modal-dialog{
+max-width:80%;
+
 }
 
 @media screen and (max-width:855px){
@@ -106,7 +130,7 @@ Product Entry
 <div id="div4">
 <div id="div4-1"><label>ProductName</label></div>
 <div id="div4-2"><input type="text"></div>
-<div id="div4-3" style="text-align:left;"><input type="button" value="--"></div>
+<div id="div4-3" style=""><input type="button" value="--" id="btnForModal"/></div>
 <div id="div4-4"></div>
 </div>
 
@@ -118,7 +142,7 @@ Product Entry
 </div>
 
 <div id="div4">
-<div id="div4-1"><label>TotalNubers</label></div>
+<div id="div4-1"><label>TotalNumbers</label></div>
 <div id="div4-2"><input type="text"></div>
 <div id="div4-3"><label>TotalCost</label></div>
 <div id="div4-4"><label>$45,000</label></div>
@@ -138,11 +162,44 @@ Product Entry
 </div>
 
 <div id="right-Section">
-Right Section!!!
+d
 </div>
 
 </div> 
 
+<div class="modal fade" id="divModal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-body">
+<div>
+<input type="text">
+<input type="button" value="Search"/>
 </div>
+<div class="modal-footer">
+<input type="button" value="Close" data-dismiss="modal"/>
+</div>
+<div>
+<table border="1">
+<tr><td><input type="button" value="select">
+</td><td>Name</td><td>Cost</td><td>Quantity</td><td></td></tr>
+
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+</div>
+
+<script type="text/javascript">
+var button1 = document.getElementById('btnForModal')
+
+button1.onclick = function(){
+$('#divModal').modal({backdrop:'static'});
+}
+</script>
+
+
 </body>
 </html>
