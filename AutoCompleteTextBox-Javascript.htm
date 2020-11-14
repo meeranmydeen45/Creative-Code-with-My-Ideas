@@ -1,0 +1,88 @@
+<html>
+
+<head>
+<style>
+input[type="text"]{
+width:30%;
+}
+
+#divContent{
+position:relative;
+font-weight:bold;
+font-size:20px;
+color:royalblue;
+margin-top:0px;
+border:1px solid #ddd;
+width:30%;
+}
+
+#divInner{
+border-bottom:1px solid #ddd;
+cursor:pointer;
+padding:5px;
+
+}
+#divInner:hover{
+color:black;
+background-color:#e8e8e8;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<input type="text" id="autoInput">
+<div id="divContent"></div>
+<script type="text/javascript">
+
+var listArray = ["Chennai","Paris","NewYork","Columbo","Tokyo","Tenver","Ninja","Phoenix"]
+
+var autoInput = document.getElementById('autoInput');
+var divContent = document.getElementById('divContent')
+
+var txtBoxValue;
+var searchIndex;
+
+autoInput.addEventListener('keyup', function(e){
+
+txtBoxValue = autoInput.value
+if(!txtBoxValue){
+divContent.innerHTML =''
+return false
+}
+var array = []
+for(var i=0; i< listArray.length; i++)
+{
+var arrValue = listArray[i].substr(0,txtBoxValue.length)
+if(arrValue.toUpperCase() == txtBoxValue.toUpperCase()){
+ array.push(listArray[i])
+}
+}
+generateAutoBox(array);
+
+
+});
+
+function generateAutoBox(items){
+searchIndex = items.map((item, i) => {
+  return {id: i, item: item}
+});
+divContent.innerHTML =''
+for(var i=0; i<items.length; i++){
+   divContent.innerHTML += "<div id='divInner' onclick='callClick("+i+")'>"+items[i]+"</div>"
+}
+}
+
+function callClick(id){
+ var singleObj = searchIndex.find(i => i.id == id)
+ autoInput.value = singleObj.item
+ divContent.innerHTML =''
+ 
+}
+</script>
+</body>
+
+</html>
