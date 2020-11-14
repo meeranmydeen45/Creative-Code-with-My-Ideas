@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{
+margin:0;
+
+}
+
+
+#divTab{
+background-color:#f1f1f1;
+width:100%;
+height:50px;
+
+}
+button{
+float:left;
+padding:15px;
+border:none;
+outline:none;
+height:100%;
+cursor:pointer;
+}
+button:hover{
+color:blue;
+background-color:#ccc;
+}
+.tabContent{
+display:none;
+background-color:#eee;
+border:1px solid #ccc;
+margin:5px;
+padding:10px;
+height:100px;
+overflow:hidden;
+animation:simple 0.6s ease;
+}
+.tabContentDynamic{
+display:none;
+background-color:#eee;
+border:1px solid #ccc;
+margin:5px;
+padding:10px;
+height:100px;
+overflow:hidden;
+animation:simple2 0.6s ease;
+}
+
+button.xclass{
+color:blue;
+background-color:#444;
+}
+
+@keyframes simple{
+from {height:0}
+to {height:100px}
+}
+@keyframes simple2{
+from {height:100px; padding:10px;}
+to {height:0; padding:0px;}
+}
+</style>
+</head>
+<body>
+
+<div id="divTab">
+<button onclick="openTabContent(event, 'Home')" class="btn" id="btnHome">Home</button>
+<button onclick="openTabContent(event, 'Menu')" class="btn">Menu</button>
+<button onclick="openTabContent(event, 'Orders')" class="btn">Orders</button>
+</div>
+
+<div id="Home" class="tabContent">
+<h1>Home</h1>
+<p>The Home page is brief info about the whole page content!!</p>
+</div>
+
+<div id="Menu" class="tabContent">
+<h1>Menu</h1>
+<p>The Home page is brief info about the whole page content!!</p>
+</div>
+
+<div id="Orders" class="tabContent">
+<h1>Orders</h1>
+<p>The Home page is brief info about the whole page content!!</p>
+</div>
+
+<div>
+<p>End of the Code!!</p>
+</div>
+
+<script type="text/javascript">
+var tabContent;
+var prevTab;
+var test;
+var i;
+function openTabContent(e, id){
+
+  tabContent =  document.getElementById(id);
+ var prevContent = document.getElementById(prevTab);
+ var buttonAll = document.getElementsByClassName('btn');
+  if(tabContent.style.display == 'block'){
+   for(i=0; i< buttonAll.length; i++){
+     buttonAll[i].classList.remove('xclass')
+   
+   }
+   e.currentTarget.classList.remove('xclass')
+   tabContent.classList.remove('tabContent')
+   tabContent.classList.add('tabContentDynamic')
+   setTimeout(function(){
+    tabContent.style.display='none'
+   },550)
+ 
+  }
+
+  else if(tabContent.style.display == ''||
+  tabContent.style.display == 'none'){
+  for(i=0; i< buttonAll.length; i++){
+     buttonAll[i].classList.remove('xclass')
+   
+   }
+  e.currentTarget.classList.add('xclass')
+  tabContent.classList.remove('tabContentDynamic')
+  tabContent.classList.add('tabContent')
+  tabContent.style.display='block'
+  prevTab = tabContent.id
+  
+  }
+  
+  if(prevContent){
+  
+  if(prevContent.id == tabContent.id)
+  {
+    
+    var status = tabContent.style.display
+    
+    if(status == 'block')
+    tabContent.style.display = 'block'
+    if(status == 'none')
+    tabContent.style.display = 'none'
+  }
+  else{
+   prevContent.style.display = 'none'
+  }
+ }
+}
+
+var btnHome = document.getElementById('btnHome')
+btnHome.click();
+</script>
+</body>
+
+
+
+</html>
