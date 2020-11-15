@@ -1,0 +1,102 @@
+<html>
+<style>
+</style>
+
+<body>
+<canvas width="400" height="400" id="canvasArea"></canvas>
+
+<script type="text/javascript">
+var canvas =  document.getElementById('canvasArea')
+var context = canvas.getContext('2d')
+var colors = ['red','yellow','green','white','dodgerblue','gold','pink']
+var colorValue = 0;
+context.scale(50,50)
+
+var dropCounter = 0
+var dropInterval = 1000
+var lastTime = 0;
+var sqaures = [{x:0,y:0, color:0, isActive:true, id:1}]
+
+function draw(){
+context.fillStyle = "#000"
+context.fillRect(0,0,canvas.width, canvas.height)
+for(let x=0; x<sqaures.length;++x){
+var obj = sqaures[x]
+drawSquare(obj.x, obj.y, obj.color)}};
+
+function drawSquare(x, y, colorValue){
+
+context.fillStyle = colors[colorValue]
+context.fillRect(x, y, 1, 1)};
+
+function dropSquare(){
+  var currentObj = sqaures.find(x => x.isActive == true)
+  var collideStatus = isCollide()
+  console.log(collideStatus)
+  if(currentObj && currentObj.y < 7){
+  currentObj.y++
+  dropCounter = 0
+  }
+  else if(currentObj){
+  console.log('New Object')
+  colorValue = randomValue()
+  var id = currentObj.id + 1
+  currentObj.isActive = false
+  sqaures.push({x:0,y:0,color:colorValue, isActive:true, id: id})
+  dropCounter = 0
+  }};
+
+function update(time = 0){
+var deltaTime = time - lastTime
+lastTime = time
+dropCounter += deltaTime;
+
+if(dropCounter > dropInterval){
+dropSquare()
+}
+draw();
+requestAnimationFrame(update)};
+
+document.body.addEventListener('keydown', (e) => {
+var currentObj = sqaures.find(x => x.isActive == true)
+ if(e.keyCode ==37){
+    currentObj.x--
+ };
+ if(e.keyCode ==38){
+  currentObj.y--
+  dropCounter = 0
+ };
+ if(e.keyCode ==39){
+   currentObj.x++
+ }
+ if(e.keyCode ==40){
+  currentObj.y++
+  dropCounter = 0
+  };
+});
+
+function randomValue(){
+ var random = Math.round(Math.random() * 10)
+if(random > 6)
+{
+   random = random - 5
+}
+return random};
+
+function isCollide(){
+let currentObj = sqaures.find(x => x.isActive == true)
+sqaures.forEach((obj, x) => {
+  if((obj.id != currentObj.id)&&(obj.y == currentObj.y) && (obj.x == currentObj.x))
+  {
+  console.log('Collition Status')
+  return true;
+  }
+ 
+});
+ return false};
+
+update();
+
+</script>
+</body>
+</html>
