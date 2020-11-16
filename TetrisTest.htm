@@ -1,4 +1,4 @@
-<html>
+<html>
 <style>
 </style>
 
@@ -16,6 +16,7 @@ var dropCounter = 0
 var dropInterval = 1000
 var lastTime = 0;
 var sqaures = [{x:0,y:0, color:0, isActive:true, id:1}]
+var isCrashed = false;
 
 function draw(){
 context.fillStyle = "#000"
@@ -24,27 +25,31 @@ for(let x=0; x<sqaures.length;++x){
 var obj = sqaures[x]
 drawSquare(obj.x, obj.y, obj.color)}};
 
-function drawSquare(x, y, colorValue){
 
+function drawSquare(x, y, colorValue){
 context.fillStyle = colors[colorValue]
 context.fillRect(x, y, 1, 1)};
 
+
 function dropSquare(){
   var currentObj = sqaures.find(x => x.isActive == true)
-  var collideStatus = isCollide()
-  console.log(collideStatus)
-  if(currentObj && currentObj.y < 7){
+  if(currentObj.y < 7 && (!isCrashed)){
   currentObj.y++
   dropCounter = 0
   }
-  else if(currentObj){
-  console.log('New Object')
+  else if(isCrashed || currentObj){
+  isCrashed = false
   colorValue = randomValue()
   var id = currentObj.id + 1
   currentObj.isActive = false
   sqaures.push({x:0,y:0,color:colorValue, isActive:true, id: id})
   dropCounter = 0
-  }};
+  }
+  isCrashed = isCollide()
+  if(isCrashed){ currentObj.y--}
+ 
+  };
+
 
 function update(time = 0){
 var deltaTime = time - lastTime
@@ -56,6 +61,7 @@ dropSquare()
 }
 draw();
 requestAnimationFrame(update)};
+
 
 document.body.addEventListener('keydown', (e) => {
 var currentObj = sqaures.find(x => x.isActive == true)
@@ -75,6 +81,7 @@ var currentObj = sqaures.find(x => x.isActive == true)
   };
 });
 
+
 function randomValue(){
  var random = Math.round(Math.random() * 10)
 if(random > 6)
@@ -83,17 +90,18 @@ if(random > 6)
 }
 return random};
 
+
 function isCollide(){
 let currentObj = sqaures.find(x => x.isActive == true)
 sqaures.forEach((obj, x) => {
   if((obj.id != currentObj.id)&&(obj.y == currentObj.y) && (obj.x == currentObj.x))
   {
-  console.log('Collition Status')
-  return true;
+  console.log('Collition!!! Status')
+  isCrashed = true
+  
   }
- 
-});
- return false};
+ });
+return isCrashed;};
 
 update();
 
