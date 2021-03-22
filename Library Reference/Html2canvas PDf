@@ -3,7 +3,8 @@ import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 import $ from 'jquery'
 
-CDN Link:  "https://unpkg.com/html2canvas@1.0.0-rc.5/dist/html2canvas.js"
+html2canvas CDN Link:  "https://unpkg.com/html2canvas@1.0.0-rc.5/dist/html2canvas.js"
+jsPDF CDN Link:        "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"
 
 export default function generatePDF(){
 
