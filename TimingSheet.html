@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+#container{
+display:flex;
+}
+
+.divBox{
+width:100px;
+background-color:lightblue;
+margin:5px;
+text-align:center;
+line-height:100px;
+cursor:pointer;
+z-index:1;
+user-select:none;
+}
+
+.divBoxOccupied{
+width:100px;
+background-color:lightgreen;
+margin:5px;
+text-align:center;
+line-height:100px;
+cursor:pointer;
+z-index:1;
+user-select:none;
+}
+
+#btnBook{
+position:absolute;
+top:300px;
+}
+</style>
+
+
+<body>
+
+<p>Time-Sheet</p>
+<input type="button" value="Test" id="btn">
+
+<div id="container">
+
+
+</div>
+
+
+<input type="button" value="Book" id="btnBook">
+</body>
+</head>
+</html>
+
+
+
+<script>
+$(document).ready(function(){
+ 
+ // Handle Button Click
+ 
+ $('#btn').click(function(){
+  $('#container').text('')
+  var idObj = [{id:1},{id:2}]
+  
+  var sheetObj = 
+  [{Airplane:false, Train:false, id:1},
+  {Airplane:false, Train:false, id:2}]
+   
+ // Counting pro. Length in Obj
+  var propName = []
+  for(prop in sheetObj[0])
+  {
+  propName.push(prop)
+  
+  };
+  var container = document.getElementById('container')
+  for(var i=0; i<propName.length-1; i++)
+  {
+    var div = document.createElement('div')
+    div.setAttribute('class', 'divBox')
+    div.setAttribute('id', i)
+    div.innerHTML = propName[i]
+    //Div Event Handling
+    div.addEventListener('click', function(){
+    
+     var className =  this.className
+     var objID = this.getAttribute('id')
+     var propName = this.innerHTML
+     if(className == 'divBox')
+     {
+       var copyObj = [...sheetObj]
+       copyObj[objID][propName] = true
+       sheetObj = copyObj
+       console.log(sheetObj)
+       
+       this.classList.remove('divBox')
+       this.classList.add('divBoxOccupied')
+     }
+     else if(className == 'divBoxOccupied'){
+       var copyObj = [...sheetObj]
+       copyObj[objID][propName] = false
+       sheetObj = copyObj
+       console.log(sheetObj)
+       
+       this.classList.add('divBox')
+       this.classList.remove('divBoxOccupied')
+     }
+    });
+    //#End Region
+    container.appendChild(div)
+  }
+  
+     
+  });
+  
+ //End Region
+
+
+
+});
+</script>
+
+
+
