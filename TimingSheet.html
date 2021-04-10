@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -10,7 +10,7 @@ display:flex;
 .divBox{
 width:100px;
 background-color:lightblue;
-margin:5px;
+margin:1px;
 text-align:center;
 line-height:100px;
 cursor:pointer;
@@ -29,9 +29,21 @@ z-index:1;
 user-select:none;
 }
 
+.divBoxOccupied.booked{
+opacity:0.5;
+color:red;
+
+}
+
 #btnBook{
 position:absolute;
 top:300px;
+}
+
+#btnRelease{
+position:absolute;
+top:300px;
+left:85px;
 }
 </style>
 
@@ -48,6 +60,7 @@ top:300px;
 
 
 <input type="button" value="Book" id="btnBook">
+<input type="button" value="Release" id="btnRelease">
 </body>
 </head>
 </html>
@@ -56,24 +69,30 @@ top:300px;
 
 <script>
 $(document).ready(function(){
- 
- // Handle Button Click
- 
- $('#btn').click(function(){
-  $('#container').text('')
-  var idObj = [{id:1},{id:2}]
+
+  var idObj = [{id:1},{id:2},{id:3},{id:4}]
   
   var sheetObj = 
-  [{Airplane:false, Train:false, id:1},
-  {Airplane:false, Train:false, id:2}]
+  [{Airplane:false, Train:false, Boat:false, Bus:false, id:1},
+  {Airplane:false, Train:false, Boat:false, Bus:false, id:2},
+  {Airplane:false, Train:false, Boat:false, Bus:false, id:3},
+  {Airplane:false, Train:false, Boat:false, Bus:false, id:4}]
+  
+  var propName = []
+ // Handle Button Click
+ $('#btn').click(function(){
+  $('#container').text('')
+
    
  // Counting pro. Length in Obj
-  var propName = []
+  
   for(prop in sheetObj[0])
   {
   propName.push(prop)
   
   };
+  
+  //#End
   var container = document.getElementById('container')
   for(var i=0; i<propName.length-1; i++)
   {
@@ -92,7 +111,7 @@ $(document).ready(function(){
        var copyObj = [...sheetObj]
        copyObj[objID][propName] = true
        sheetObj = copyObj
-       console.log(sheetObj)
+       
        
        this.classList.remove('divBox')
        this.classList.add('divBoxOccupied')
@@ -101,25 +120,56 @@ $(document).ready(function(){
        var copyObj = [...sheetObj]
        copyObj[objID][propName] = false
        sheetObj = copyObj
-       console.log(sheetObj)
+       
        
        this.classList.add('divBox')
        this.classList.remove('divBoxOccupied')
      }
     });
-    //#End Region
+    //#End Region Div Event Handling
     container.appendChild(div)
   }
   
      
   });
-  
- //End Region
+  //End Region Button Click Test
 
 
+ //Start - Handle Button Book Click
+ $('#btnBook').click(function(){
+ 
+  for(var i=0; i<sheetObj.length; i++)
+  {
+    
+    var getPropName = propName[i]
+    
+    if(sheetObj[i][getPropName] == true)
+    {
+     var seletedDiv = document.getElementById(i);
+     seletedDiv.className += " booked"
+     
+    }
+    
+  }//End of For Loop
+ 
+ });
+ //End - Btn Book click handle
+ 
+ //Start - Btn release handle
+ $('#btnRelease').click(function(){
+  const selecteSeat =  document.getElementsByClassName('divBoxOccupied booked');
+var len = selecteSeat.length;
+  var i;
+  for(i=0; i < len; i++)
+  {
+    console.log(selecteSeat)
+ 
+selecteSeat[i].className = selecteSeat[i].className.replace(" booked","")
 
+  }//End for Loop
+ 
+ });
+ //End - btn release click
+ 
 });
 </script>
-
-
-
