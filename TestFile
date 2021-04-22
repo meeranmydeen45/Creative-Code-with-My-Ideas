@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+*{
+box-sizing:border-box;
+}
+
+#headDiv{
+background-color:lightblue;
+width:300px;
+height:500px;
+padding:25px;
+}
+
+#innerDiv{
+background-color:lightgreen;
+text-align:center;
+}
+</style>
+
+<h2>JavaScript Variables</h2>
+
+<div id="headDiv">
+<div id="innerDiv">
+Content Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDiv
+
+</div>
+</div>
+<input type="button" id="testButton" value="Test" onclick="handleButton()"/>
+
+<body>
+<script src="https://unpkg.com/html2canvas@1.0.0-rc.5/dist/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script>
+
+var div = document.getElementById("headDiv");
+//var width = window.outerHeight;
+//div.innerHTML = width;
+
+window.addEventListener('scroll', function(){ 
+ 
+
+}, true)
+
+
+function handleButton(){
+var currentPosition = document.getElementById("headDiv").scrollTop;
+ var w = document.getElementById("headDiv").offsetWidth;
+var h = document.getElementById("headDiv").offsetHeight;
+console.log(w+"and"+h)
+
+document.getElementById("headDiv").style.height="auto";
+html2canvas(div).then(function(canvas){
+
+var img = canvas.toDataURL()
+var doc = new jsPDF();
+doc.addImage(img,'jpg',10,10)
+doc.save('Pdf-Gee')
+
+});
+
+
+alert()
+}
+
+</script>
+
+</body>
+</html>
+
+
