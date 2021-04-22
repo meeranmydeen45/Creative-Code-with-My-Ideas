@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -9,8 +10,8 @@ box-sizing:border-box;
 #headDiv{
 background-color:lightblue;
 width:300px;
-height:500px;
 padding:25px;
+height:700px;
 }
 
 #innerDiv{
@@ -18,9 +19,6 @@ background-color:lightgreen;
 text-align:center;
 }
 </style>
-
-<h2>JavaScript Variables</h2>
-
 <div id="headDiv">
 <div id="innerDiv">
 Content Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Inside InnerDiv
@@ -37,19 +35,20 @@ Content Inside InnerDivContent Inside InnerDivContent Inside InnerDivContent Ins
 var div = document.getElementById("headDiv");
 //var width = window.outerHeight;
 //div.innerHTML = width;
-
+//console.log(div)
 window.addEventListener('scroll', function(){ 
- 
+// console.log(document.documentElement.scrollTop)
 
-}, true)
+});
 
 
 function handleButton(){
-var currentPosition = document.getElementById("headDiv").scrollTop;
+var currentPosition = document.documentElement.scrollTop;
+document.documentElement.scrollTop = 0;
  var w = document.getElementById("headDiv").offsetWidth;
 var h = document.getElementById("headDiv").offsetHeight;
 console.log(w+"and"+h)
-
+console.log(currentPosition)
 document.getElementById("headDiv").style.height="auto";
 html2canvas(div).then(function(canvas){
 
@@ -59,14 +58,11 @@ doc.addImage(img,'jpg',10,10)
 doc.save('Pdf-Gee')
 
 });
+document.getElementById("headDiv").style.height="";
 
-
-alert()
 }
 
 </script>
 
 </body>
 </html>
-
-
